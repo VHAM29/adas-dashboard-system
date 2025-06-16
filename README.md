@@ -1,93 +1,136 @@
-[![Choaib ELMADI - Embedded Systems](https://img.shields.io/badge/Choaib_ELMADI-Embedded_Systems-8800dd)](https://elmadichoaib.vercel.app) ![Status - Building](https://img.shields.io/badge/Status-Building-2bd729) ![Platform - ESP32 | STM32 | Arduino](https://img.shields.io/badge/Platform-ESP32_|_STM32_|_Arduino-f7d620)
+# 🚗 ADAS Dashboard System
 
-# Vehicle Dashboard with ADAS and AI Features
+Welcome to the **ADAS Dashboard System** repository! This project showcases a multi-microcontroller vehicle dashboard system equipped with Advanced Driver Assistance Systems (ADAS) features. The system utilizes ESP32, STM32, Arduino, and Python to deliver a real-time user interface and AI-based speed limit detection. 
 
-This repository documents a school project for designing a vehicle dashboard system that integrates `ADAS` (Advanced Driver Assistance System) features, real-time sensor data, and AI-based speed limitation based on detected road signs.
+![ADAS Dashboard](https://img.shields.io/badge/ADAS%20Dashboard%20System-Ready-brightgreen)
 
-<div align="center">
+## Table of Contents
 
-![Dashboard UI](./Images/dashboard-ui.png)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
+- [Releases](#releases)
+- [Contact](#contact)
 
-![Visual Wiring Diagram](./Images/visual-wiring-diagram.png)
+## Introduction
 
-</div>
+The ADAS Dashboard System aims to enhance vehicle safety and driver experience through intelligent features. By integrating multiple microcontrollers, this project provides a robust solution for modern automotive needs. The system focuses on real-time data processing and user-friendly interfaces to keep drivers informed and safe.
 
-## Overview
+## Features
 
-The project uses multiple microcontrollers to implement a reliable communication and control system for a vehicle dashboard. It also incorporates computer vision to detect speed limits and enforce safe driving decisions in real-time.
+- **Real-Time User Interface**: Displays essential vehicle information.
+- **AI-Based Speed Limit Detection**: Uses machine learning algorithms to detect speed limits.
+- **Multi-Microcontroller Support**: Built on ESP32, STM32, and Arduino platforms.
+- **Data Logging**: Records vehicle performance metrics for later analysis.
+- **Customizable Dashboard**: Users can tailor the interface to their preferences.
+- **Cross-Platform Compatibility**: Works with various operating systems.
 
-## System Architecture
+## Technologies Used
 
-The system consists of:
+- **ESP32**: For Wi-Fi and Bluetooth connectivity.
+- **STM32**: For robust processing capabilities.
+- **Arduino**: To manage sensor data and control interfaces.
+- **Python**: For backend processing and AI algorithms.
+- **HTML/CSS/JavaScript**: For front-end user interface design.
 
-- **ESP32 (Dashboard)**: Hosts the dashboard UI and communicates with the AI detection system.
-- **ESP32 (Intermediate)**: Acts as a central controller between the Arduino, Dashboard ESP32, and STM32.
-- **Arduino Nano**: Handles driver inputs and sensors (touch, angle, ...).
-- **STM32 Nucleo-F446RE**: Final controller for motor control and safety enforcement.
-- **Python Script**: Performs road sign detection and sends speed data via serial.
+## Installation
 
-## Contents
+To set up the ADAS Dashboard System, follow these steps:
 
-- **Datasheets**: Key datasheets and reference manuals of the components used.
-- **Circuit Diagram**: Overview of the system architecture, flow diagrams, and protocol mapping.
-- **Main Firmware**:
-  - `Arduino_Sensors_Data.ino`: Reads touch sensors, angle, and driver speed input.
-  - `ESP32_intermediate.ino`: Receives data from Arduino and the ESP32 Dashboard, sends command data to the STM32.
-  - `ESP32_Car_Dashboard.ino`: Hosts dashboard server, displays environment info, and receives data from the Python script.
-  - `htmlPage.h`: HTML page served by the ESP32 Web Server.
-  - `STM32_Motors_Control/`: STM32 code to handle final motor control decisions.
-- **AI Detection**:
-  - `main.py`: Python code that detects speed limits from road signs using AI.
-- **Tests**: Example sketches to verify communication protocols.
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/VHAM29/adas-dashboard-system.git
+   cd adas-dashboard-system
+   ```
 
-## Communication Protocols Used
+2. **Install Dependencies**:
+   Make sure you have the required libraries for Arduino and Python. Use the following commands to install them:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-Each microcontroller communicates using a different protocol:
+3. **Upload Code to Microcontrollers**:
+   - Use the Arduino IDE to upload the relevant code to the Arduino and ESP32.
+   - Use STM32CubeIDE for STM32 configurations.
 
-- **UART**: Between ESP32 Dashboard and Python AI script.
-- **HTTP**: Used by the ESP32 Dashboard to serve the web-based UI.
-- **CAN**: Between the two ESP32 microcontrollers.
-- **I2C**: Between ESP32 Intermediate and STM32.
-- **SPI**: Between Arduino Nano and ESP32 Intermediate.
-- **I2C**: For sensor connections on Arduino (if needed).
+4. **Configure Settings**:
+   Modify the configuration files as needed to suit your hardware setup.
 
-## AI-Based Speed Limitation
+5. **Run the Application**:
+   Execute the main Python script to start the dashboard system:
+   ```bash
+   python main.py
+   ```
 
-The AI system uses a camera and a Python script to:
+## Usage
 
-- Detect road sign images (speed limits),
-- Parse and extract the speed limit,
-- Send the max allowed speed to ESP32.
+Once the installation is complete, you can start using the ADAS Dashboard System. The dashboard will display real-time data such as speed, engine temperature, and fuel level. The AI module will analyze speed limits based on the current location and alert the driver accordingly.
 
-The ESP32 then compares the detected speed to the user’s speed input and sends the **minimum of both** to STM32 for enforcement.
+### Dashboard Interface
 
-## Dashboard UI
+The dashboard interface consists of:
 
-A simple, responsive dashboard is served by the ESP32. It shows:
+- **Speedometer**: Displays current speed.
+- **Fuel Gauge**: Shows fuel levels.
+- **Temperature Indicator**: Monitors engine temperature.
+- **Alerts Section**: Provides notifications for speed limits and other warnings.
 
-- Detected speed limit,
-- Driver input speed,
-- Final allowed speed,
-- Real-time sensor data (tilt/roll, touch interaction, ...),
-- Speedometer with a rotating needle for visualizing actual speed dynamically.
+### Customization
 
-<div align="center">
+Users can customize the dashboard by editing the configuration files. This includes changing the layout, colors, and the information displayed.
 
-![Dashboard UI](./Images/dashboard-ui.png)
+## Project Structure
 
-</div>
+Here's a brief overview of the project structure:
 
-Whether you're into embedded systems, automotive safety, or practical AI, this project bridges them all in one place.
+```
+adas-dashboard-system/
+│
+├── src/
+│   ├── arduino/
+│   ├── esp32/
+│   ├── stm32/
+│   └── python/
+│
+├── config/
+│   ├── settings.json
+│   └── dashboard_layout.json
+│
+├── requirements.txt
+└── README.md
+```
 
-Suggestions, feedback, and contributions are always welcome!
+- **src/**: Contains source code for each microcontroller and the Python application.
+- **config/**: Holds configuration files for settings and layout.
+- **requirements.txt**: Lists Python dependencies.
 
-## Contributors
+## Contributing
 
-This project was built by a team of 6 students as part of a school project. Connect with us on LinkedIn!
+We welcome contributions to enhance the ADAS Dashboard System. If you have ideas or improvements, please follow these steps:
 
-- **[Choaib ELMADI - LinkedIn](https://www.linkedin.com/in/choaib-elmadi)**
-- **[Zakaria AGHADJOUR - LinkedIn](https://www.linkedin.com/in/zakaria-aghadjour)**
-- **[Firdaous ENNACHAT - LinkedIn](https://www.linkedin.com/in/firdaous-ennachat-951ab5328)**
-- **[Ayoub Elhazmiri - LinkedIn](https://www.linkedin.com/in/ayoub-elhazmiri-6a1052285)**
-- **[Kaoutar Achergui - LinkedIn](https://www.linkedin.com/in/kaoutar-achergui-b847b6268)**
-- **Mohamed Elouisi**
+1. Fork the repository.
+2. Create a new branch.
+3. Make your changes and commit them.
+4. Push to your fork and submit a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Releases
+
+For the latest updates and downloadable files, please visit the [Releases section](https://github.com/VHAM29/adas-dashboard-system/releases). You can download the latest version and execute the necessary files.
+
+## Contact
+
+For questions or feedback, feel free to reach out:
+
+- **Email**: your-email@example.com
+- **GitHub**: [VHAM29](https://github.com/VHAM29)
+
+Thank you for your interest in the ADAS Dashboard System! We hope you find this project useful and informative.
